@@ -7,7 +7,7 @@ string[] productArt = new string[] {"Häst", "Bil", "Båt", "Blomma", "Fjäril",
                                     "Dinosaurie", "Fotbollsspelare", "Räv", "Elefant", "Älg", "Hjort", "Stad", "Taxi", "Hav", "Tårta"};
 string[] mugType = new string[] { "Extra stor", "Stor", "Medium", "Liten", "Mini" };
 string[] tshirtSize = new string[] { "XL", "L", "M", "S", "XS" };
-string[] tshirtMaterial = new string[] { "Bomull", "Polyester", "Bomull/Polyester" };
+string[] tshirtMaterial = new string[] { "Bomull", "Polyester", "Bomull och Polyester" };
 string storeAddress = "Storgatan 1";
 string businessAddress = "Bakgatan 3";
 
@@ -26,24 +26,20 @@ while (true)
         Console.Clear();
         Console.WriteLine("1. T-Shirts\n2. Muggar\n3. Gå tillbaka");
         int subMenuChoice = Convert.ToInt32(Console.ReadLine());
-        if (subMenuChoice == 1)
+        switch(subMenuChoice)
         {
-            subMenuChoice = 0;
-            DisplayTshirts();
-            //tshirts metod, lista och sortering
-        }
-        else if (subMenuChoice == 2)
-        {
-            subMenuChoice = 0;
-            DisplayMugs();
-            //Muggar metod, lista och sortering
-        }
-        else if (subMenuChoice == 3)
-        {
-            subMenuChoice = 0;
-            break;
-        }
-
+            case 1:
+                DisplayTshirts(); //tshirts metod, lista och sortering
+                break;
+            case 2:
+                DisplayMugs(); //Muggar metod, lista och sortering
+                break;
+            case 3:
+                menuChoice = 0;
+                break;
+            default:
+                break;
+        };
     };
 
     if (menuChoice == 2)
@@ -53,7 +49,7 @@ while (true)
 void StoreInfo()
 {
     Console.WriteLine("-----------------------------------");
-    Console.WriteLine("Välkommen till våran butik!");
+    Console.WriteLine("Välkommen till butiken!");
     Console.WriteLine($"Du kan besöka oss på {storeAddress}.");
     Console.WriteLine($"Faktureringsadress är {businessAddress}.");
     Console.WriteLine("-----------------------------------");
@@ -69,7 +65,7 @@ List<Tshirt> TshirtGenerator(List<Tshirt> tshirts, string[] art, string[] size, 
         tshirt.ProductArt = a;
         tshirt.Size = size[random.Next(5)];
         tshirt.Material = material[random.Next(3)];
-        tshirt.Rating = Math.Round(random.NextDouble() * 10, 1);
+        tshirt.Rating = random.NextDouble() * 10;
         tshirt.Price = random.Next(50, 401);
         filledTshirts.Add(tshirt);
     }
@@ -85,7 +81,7 @@ List<Mug> MugGenerator(List<Mug> mugs, string[] art, string[] type)
         Mug mug = new Mug();
         mug.ProductArt = a;
         mug.Type = type[random.Next(type.Length)];
-        mug.Rating = Math.Round(random.NextDouble() * 10, 1);
+        mug.Rating = random.NextDouble() * 10;
         mug.Price = random.Next(50, 201);
         filledMugs.Add(mug);
     }

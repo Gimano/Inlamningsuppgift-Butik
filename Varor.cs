@@ -9,8 +9,14 @@ namespace Inlämningsuppgift_Butik
 {
     internal abstract class Ware
     {
+
+        private double rating;
+        public double Rating
+        {
+            get { return rating; }
+            set { rating = Math.Round(value, 1); }
+        }
         public string? ProductArt { get; set; }
-        public double Rating { get; set; }
         public decimal Price { get; set; }   
     }
 
@@ -39,7 +45,7 @@ namespace Inlämningsuppgift_Butik
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
-            Tshirt nextWare = obj as Tshirt;
+            Tshirt? nextWare = obj as Tshirt;
             if (nextWare != null)
             {
                 return nextWare.Rating.CompareTo(this.Rating);
@@ -66,7 +72,7 @@ namespace Inlämningsuppgift_Butik
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
-            Mug nextMug = obj as Mug;
+            Mug? nextMug = obj as Mug;
             if (nextMug != null)
             {
                 return this.Rating.CompareTo(nextMug.Rating);
