@@ -15,7 +15,11 @@ string businessAddress = "Bakgatan 3";
 tshirtList = TshirtGenerator(tshirtList, productArt, tshirtSize, tshirtMaterial);
 mugList = MugGenerator(mugList, productArt, mugType);
 
-while (true)
+//En första grundsortering av listorna
+tshirtList.Sort();
+mugList.Sort();
+
+while (true)  //Huvudmenyn
 {
     Console.Clear();
     StoreInfo(); //skriver ut välkomstskärm med adress
@@ -24,15 +28,15 @@ while (true)
     while (menuChoice == 1)
     {
         Console.Clear();
-        Console.WriteLine("1. T-Shirts\n2. Muggar\n3. Gå tillbaka");
+        Console.WriteLine("1. T-Shirts\n2. Muggar\n3. Gå Tillbaka");
         int subMenuChoice = Convert.ToInt32(Console.ReadLine());
         switch(subMenuChoice)
         {
             case 1:
-                DisplayTshirts(); //tshirts metod, lista och sortering
+                OpenTshirts(); //Metod som visar lista av tshirts och sorterar listan
                 break;
             case 2:
-                DisplayMugs(); //Muggar metod, lista och sortering
+                OpenMugs(); //Metod som visar lista av muggar och sorterar listan
                 break;
             case 3:
                 menuChoice = 0;
@@ -55,7 +59,7 @@ void StoreInfo()
     Console.WriteLine("-----------------------------------");
 }
 
-List<Tshirt> TshirtGenerator(List<Tshirt> tshirts, string[] art, string[] size, string[] material)
+List<Tshirt> TshirtGenerator(List<Tshirt> tshirts, string[] art, string[] size, string[] material) //Fyller tshirtlistan med objekt
 {
     Random random = new Random();
     List<Tshirt> filledTshirts = new List<Tshirt>();
@@ -72,7 +76,7 @@ List<Tshirt> TshirtGenerator(List<Tshirt> tshirts, string[] art, string[] size, 
     return filledTshirts;
 }
 
-List<Mug> MugGenerator(List<Mug> mugs, string[] art, string[] type)
+List<Mug> MugGenerator(List<Mug> mugs, string[] art, string[] type) //Fyller mugglistan med objekt
 {
     Random random = new Random();
     List<Mug> filledMugs = new List<Mug>();
@@ -88,31 +92,124 @@ List<Mug> MugGenerator(List<Mug> mugs, string[] art, string[] type)
     return filledMugs;
 }
 
-void DisplayTshirts(){
-    tshirtList.Sort();
-    Console.Clear();
-    Console.WriteLine("--------------T-SHIRTS----------------");
-    Console.WriteLine("Motiv, Storlek, Material, Betyg, Pris");
-    Console.WriteLine("--------------------------------------");
-    foreach (Tshirt t in tshirtList)
+void OpenTshirts()
+{
+    while (true)
     {
-        Console.WriteLine(t.ProductArt + "     " + t.Size + "     " + t.Material + "     " +  + t.Rating + "     " + t.Price);
+        DisplayTshirtsList();
+        Console.WriteLine(); 
+        Console.WriteLine("Ändra Sortering");
+        Console.WriteLine("1. Betyg - Högst överst");
+        Console.WriteLine("2. Betyg - Lägst överst");
+        Console.WriteLine("3. Motiv - A-Ö");
+        Console.WriteLine("4. Motiv - Ö-A");
+        Console.WriteLine("5. Pris - Dyrast överst");
+        Console.WriteLine("6. Pris - Billigast överst");
+        Console.WriteLine("7. Gå Tillbaka");
+        int choice = int.Parse(Console.ReadLine());
+        SortTshirts(choice);
+        if (choice == 7)
+            break;
     }
-    Console.ReadKey();
 }
 
-void DisplayMugs()
+void DisplayTshirtsList()
 {
-    mugList.Sort();
     Console.Clear();
-    Console.WriteLine("-----------MUGGAR------------");
-    Console.WriteLine("Motiv, Storlek, Betyg, Pris");
-    Console.WriteLine("-----------------------------");
+    Console.WriteLine("-------------------------------T-SHIRTS----------------------------------");
+    Console.WriteLine("Motiv               Storlek   Material                 Betyg 0-10   Pris");
+    Console.WriteLine("-------------------------------------------------------------------------");
+    foreach (Tshirt t in tshirtList)
+    {
+        Console.WriteLine($"{t.ProductArt,-20}" + $"{t.Size,-10}" + $"{t.Material,-25}" + $"{t.Rating,-12}" + $"{t.Price + "Kr",-10}");
+    }
+}
+
+void SortTshirts(int sortId)
+{
+    switch (sortId)
+    {
+        case 1:
+            tshirtList.Sort();
+            break;
+        case 2:
+            tshirtList = tshirtList.OrderBy(o => o.Rating).ToList();
+            break;
+        case 3:
+            tshirtList = tshirtList.OrderBy(o => o.ProductArt).ToList();
+            break;
+        case 4:
+            tshirtList = tshirtList.OrderByDescending(o => o.ProductArt).ToList();
+            break;
+        case 5:
+            tshirtList = tshirtList.OrderByDescending(o => o.Price).ToList();
+            break;
+        case 6:
+            tshirtList = tshirtList.OrderBy(o => o.Price).ToList();
+            break;
+        default:
+            break;
+    }
+}
+
+void OpenMugs()
+{
+    while (true)
+    {
+        DisplayMugsList();
+        Console.WriteLine();
+        Console.WriteLine("Ändra Sortering");
+        Console.WriteLine("1. Betyg - Högst överst");
+        Console.WriteLine("2. Betyg - Lägst överst");
+        Console.WriteLine("3. Motiv - A-Ö");
+        Console.WriteLine("4. Motiv - Ö-A");
+        Console.WriteLine("5. Pris - Dyrast överst");
+        Console.WriteLine("6. Pris - Billigast överst");
+        Console.WriteLine("7. Gå Tillbaka");
+        int choice = int.Parse(Console.ReadLine());
+        SortMugs(choice);
+        if (choice == 7)
+            break;
+    }
+}
+
+void DisplayMugsList()
+{
+    Console.Clear();
+    Console.WriteLine("----------------------MUGGAR------------------------");
+    Console.WriteLine("Motiv               Storlek       Betyg 0-10   Pris");
+    Console.WriteLine("----------------------------------------------------");
     foreach (Mug m in mugList)
     {
-        Console.WriteLine(m.ProductArt + "     " + m.Type + "     " + m.Rating + "     " + m.Price);
+        Console.WriteLine($"{m.ProductArt,-20}" + $"{m.Type,-14}" + $"{m.Rating,-12}" + $"{m.Price + "Kr",-10}");
     }
-    Console.ReadKey();
+}
+
+void SortMugs(int sortId)
+{
+    switch (sortId)
+    {
+        case 1:
+            mugList = mugList.OrderByDescending(o => o.Rating).ToList();
+            break;
+        case 2:
+            mugList.Sort();
+            break;
+        case 3:
+            mugList = mugList.OrderBy(o => o.ProductArt).ToList();
+            break;
+        case 4:
+            mugList = mugList.OrderByDescending(o => o.ProductArt).ToList();
+            break;
+        case 5:
+            mugList = mugList.OrderByDescending(o => o.Price).ToList();
+            break;
+        case 6:
+            mugList = mugList.OrderBy(o => o.Price).ToList();
+            break;
+        default:
+            break;
+    }
 }
 
 /*
