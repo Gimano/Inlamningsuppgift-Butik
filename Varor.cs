@@ -42,7 +42,7 @@ namespace Inlämningsuppgift_Butik
             Material = material;
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             if (obj == null) return 1;
             Tshirt? nextWare = obj as Tshirt;
@@ -69,7 +69,7 @@ namespace Inlämningsuppgift_Butik
             Type = "";
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             if (obj == null) return 1;
             Mug? nextMug = obj as Mug;
