@@ -24,7 +24,8 @@ while (true)  //Huvudmenyn
     Console.Clear();
     StoreInfo(); //skriver ut välkomstskärm med adress
     Console.WriteLine("Välj ett alternativ:\n1. Varor\n2. Avsluta");
-    int menuChoice = Convert.ToInt32(Console.ReadLine());
+    int menuChoice = 0;
+    while (!int.TryParse(Console.ReadLine(), out menuChoice)) ;
     while (menuChoice == 1)
     {
         Console.Clear();
