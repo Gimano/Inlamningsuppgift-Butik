@@ -14,7 +14,7 @@ namespace Inlämningsuppgift_Butik
         public double Rating
         {
             get { return rating; }
-            set { rating = Math.Round(value, 1); }
+            set { rating = Math.Round(value, 1); } //Kortar ner talet till en decimal
         }
         public string? ProductArt { get; set; }
         public decimal Price { get; set; }   

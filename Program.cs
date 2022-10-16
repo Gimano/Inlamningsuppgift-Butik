@@ -25,19 +25,20 @@ while (true)  //Huvudmenyn
     StoreInfo(); //skriver ut välkomstskärm med adress
     Console.WriteLine("Välj ett alternativ:\n1. Varor\n2. Avsluta");
     int menuChoice = 0;
-    while (!int.TryParse(Console.ReadLine(), out menuChoice)) ;
+    while (!int.TryParse(Console.ReadLine(), out menuChoice));
     while (menuChoice == 1)
     {
         Console.Clear();
         Console.WriteLine("1. T-Shirts\n2. Muggar\n3. Gå Tillbaka");
-        int subMenuChoice = Convert.ToInt32(Console.ReadLine());
+        int subMenuChoice = 0;
+        while (!int.TryParse(Console.ReadLine(), out subMenuChoice));
         switch(subMenuChoice)
         {
             case 1:
-                OpenTshirts(); //Metod som visar lista av tshirts och sorterar listan
+                OpenTshirts(); //Metod som kallar på andra metoder som visar listan av tshirts och sorterar listan
                 break;
             case 2:
-                OpenMugs(); //Metod som visar lista av muggar och sorterar listan
+                OpenMugs(); //Metod som kallar på andra metoder som visar lista av muggar och sorterar listan
                 break;
             case 3:
                 menuChoice = 0;
@@ -93,7 +94,7 @@ List<Mug> MugGenerator(List<Mug> mugs, string[] art, string[] type) //Fyller mug
     return filledMugs;
 }
 
-void OpenTshirts()
+void OpenTshirts() //visar tshirts och låter användaren byta sortering
 {
     while (true)
     {
@@ -107,14 +108,15 @@ void OpenTshirts()
         Console.WriteLine("5. Pris - Dyrast överst");
         Console.WriteLine("6. Pris - Billigast överst");
         Console.WriteLine("7. Gå Tillbaka");
-        int choice = int.Parse(Console.ReadLine());
+        int choice = 0;
+        while (!int.TryParse(Console.ReadLine(), out choice));
         SortTshirts(choice);
         if (choice == 7)
             break;
     }
 }
 
-void DisplayTshirtsList()
+void DisplayTshirtsList() //Visar alla tshirts som finns i listan
 {
     Console.Clear();
     Console.WriteLine("-------------------------------T-SHIRTS----------------------------------");
@@ -126,7 +128,7 @@ void DisplayTshirtsList()
     }
 }
 
-void SortTshirts(int sortId)
+void SortTshirts(int sortId) //Sorterar tshirts efter vad man valt
 {
     switch (sortId)
     {
@@ -153,7 +155,7 @@ void SortTshirts(int sortId)
     }
 }
 
-void OpenMugs()
+void OpenMugs() //visar muggar och låter användaren byta sortering
 {
     while (true)
     {
@@ -167,14 +169,15 @@ void OpenMugs()
         Console.WriteLine("5. Pris - Dyrast överst");
         Console.WriteLine("6. Pris - Billigast överst");
         Console.WriteLine("7. Gå Tillbaka");
-        int choice = int.Parse(Console.ReadLine());
+        int choice = 0;
+        while (!int.TryParse(Console.ReadLine(), out choice)) ;
         SortMugs(choice);
         if (choice == 7)
             break;
     }
 }
 
-void DisplayMugsList()
+void DisplayMugsList() //Visar alla muggar som finns i listan
 {
     Console.Clear();
     Console.WriteLine("----------------------MUGGAR------------------------");
@@ -186,7 +189,7 @@ void DisplayMugsList()
     }
 }
 
-void SortMugs(int sortId)
+void SortMugs(int sortId) //Sorterar muggar efter vad man valt
 {
     switch (sortId)
     {
@@ -212,36 +215,3 @@ void SortMugs(int sortId)
             break;
     }
 }
-
-/*
-             * 
-             * 30 motiv för muggar och tshirts
-             * 
-             *  abstract klass varor:
-             * string Motiv
-             * double Snittbetyg från användare 0-10
-             * decimal Pris
-             * 
-             *    tshirt klass:
-             * string Storlek
-             * string Material
-             *    mugg klass:
-             * string Typ
-             * 
-             * lista av varor och deras mängd
-             * 
-             * Metoder:
-             * Navigering med piltangenter
-             * Grafik
-             * Sortering av listor
-             * 
-             * 
-             * Metod:
-             * Adress för butiksbesök
-             * Adress för fakturering
-             * 
-             * Ska presentera butikens information och adress
-             * 
-             * Presentera tshirt-utbud sorterat efter snittbetyg, fallande (högst överst)
-             * Presentera mugg-utbud sorterat efter snittbetyg, stigande (lägst överst)
-            */
